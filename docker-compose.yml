@@ -1,0 +1,41 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: globalmed
+      POSTGRES_PASSWORD: changeme
+      POSTGRES_DB: triage
+    ports:
+      - '5432:5432'
+    volumes:
+      - db_data:/var/lib/postgresql/data
+  backend:
+    build: ./backend
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    volumes:
+      - ./backend:/app
+    environment:
+      - DATABASE_URL=postgresql://globalmed:changeme@db:5432/triage
+      - ELEVENLABS_API_KEY=${ELEVENLABS_API_KEY}
+      - MISTRAL_API_KEY=${MISTRAL_API_KEY}
+      - CROSSMINT_API_KEY=${CROSSMINT_API_KEY}
+      - ML_API_URL=${ML_API_URL}
+      - JWT_SECRET=${JWT_SECRET}
+    depends_on:
+      - db
+    ports:
+      - '8000:8000'
+  frontend:
+    build: ./frontend
+    volumes:
+      - ./frontend:/app
+    ports:
+      - '3000:3000'
+    environment:
+      - REACT_APP_BACKEND_URL=http://localhost:8000
+    depends_on:
+      - backend
+volumes:
+  db_data:
