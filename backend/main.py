@@ -42,6 +42,10 @@ def verify_jwt(token: str = Depends(oauth2_scheme)):
 def health():
     return {"status": "ok"}
 
+@app.get("/api/hello")
+def hello():
+    return {"message": "Hello from GlobalMed Triage! We're here to help with emergency response.", "status": "ready"}
+
 # --- WebSocket for agent orchestration ---
 @app.websocket("/ws/triage")
 async def ws_triage(websocket: WebSocket):
