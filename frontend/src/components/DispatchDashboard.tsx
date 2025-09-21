@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 import { usePayment } from '../contexts/PaymentContext';
+import Greeting from './Greeting';
 
 interface Call {
   id: string;
@@ -263,6 +264,9 @@ export default function DispatchDashboard({ onCallStart }: DispatchDashboardProp
           </div>
         </div>
       </div>
+
+      {/* Greeting Component */}
+      <Greeting />
 
       {/* Incoming Calls */}
       <div className={`backdrop-blur-md border rounded-xl p-6 shadow-xl transition-colors duration-300 ${
