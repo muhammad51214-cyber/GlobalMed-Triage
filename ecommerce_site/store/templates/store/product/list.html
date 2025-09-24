@@ -1,0 +1,100 @@
+{% extends "store/base.html" %}
+{% load static %}
+
+{% block title %}
+    {% if category %}{{ category.name }} - {% endif %}Products - E-Commerce Store
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <!-- Sidebar -->
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header">
+                <h5>Categories</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled">
+                    <li>
+                        <a href="{% url 'store:product_list' %}" 
+                           class="text-decoration-none {% if not category %}fw-bold{% endif %}">
+                            All Products
+                        </a>
+                    </li>
+                    {% for cat in categories %}
+                    <li class="mt-2">
+                        <a href="{% url 'store:product_list_by_category' cat.slug %}" 
+                           class="text-decoration-none {% if category.slug == cat.slug %}fw-bold{% endif %}">
+                            {{ cat.name }}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Products -->
+    <div class="col-md-9">
+        {% if category %}
+        <div class="mb-4">
+            <h2>{{ category.name }}</h2>
+            <p class="text-muted">{{ category.description }}</p>
+        </div>
+        {% else %}
+        <div class="mb-4">
+            <h2>All Products</h2>
+            <p class="text-muted">Browse our complete product catalog</p>
+        </div>
+        {% endif %}
+
+        {% if products %}
+        <div class="row">
+            {% for product in products %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100">
+                    <img src="{{ product.get_image_url }}" 
+                         class="card-img-top" 
+                         alt="{{ product.name }}"
+                         style="height: 200px; object-fit: cover;">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text flex-grow-1">{{ product.description|truncatewords:15 }}</p>
+                        <div class="mt-auto">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="h5 text-primary mb-0">${{ product.price }}</span>
+                                <small class="text-muted">Stock: {{ product.stock }}</small>
+                            </div>
+                            <div class="d-grid">
+                                <a href="{% url 'store:product_detail' product.slug %}" 
+                                   class="btn btn-primary">
+                                    View Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center">
+            <div class="py-5">
+                <i class="fas fa-box-open fa-5x text-muted mb-3"></i>
+                <h3>No products found</h3>
+                <p class="text-muted">
+                    {% if category %}
+                        No products in this category yet.
+                    {% else %}
+                        No products available at the moment.
+                    {% endif %}
+                </p>
+                <a href="{% url 'store:product_list' %}" class="btn btn-primary">
+                    Browse All Products
+                </a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

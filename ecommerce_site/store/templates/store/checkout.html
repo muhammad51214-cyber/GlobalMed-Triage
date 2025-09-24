@@ -1,0 +1,101 @@
+{% extends "store/base.html" %}
+{% load static %}
+
+{% block title %}Checkout - E-Commerce Store{% endblock %}
+
+{% block content %}
+<h2>Checkout</h2>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5>Shipping Information</h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label for="address" class="form-label">Address *</label>
+                            <textarea id="address" 
+                                    name="address" 
+                                    class="form-control" 
+                                    rows="3" 
+                                    required
+                                    placeholder="Enter your full address"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8 mb-3">
+                            <label for="city" class="form-label">City *</label>
+                            <input type="text" 
+                                   id="city" 
+                                   name="city" 
+                                   class="form-control" 
+                                   required
+                                   placeholder="Enter your city">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="zip_code" class="form-label">ZIP Code *</label>
+                            <input type="text" 
+                                   id="zip_code" 
+                                   name="zip_code" 
+                                   class="form-control" 
+                                   required
+                                   placeholder="12345">
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-credit-card"></i> Place Order
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5>Order Summary</h5>
+            </div>
+            <div class="card-body">
+                {% for item in cart_items %}
+                <div class="d-flex justify-content-between mb-2">
+                    <div>
+                        <h6 class="mb-0">{{ item.product.name }}</h6>
+                        <small class="text-muted">Qty: {{ item.quantity }} × ${{ item.product.price }}</small>
+                    </div>
+                    <div>
+                        ${{ item.get_total_price }}
+                    </div>
+                </div>
+                {% endfor %}
+                
+                <hr>
+                
+                <div class="d-flex justify-content-between">
+                    <strong>Total:</strong>
+                    <strong class="text-primary">${{ total }}</strong>
+                </div>
+                
+                <div class="mt-3">
+                    <small class="text-muted">
+                        <i class="fas fa-shield-alt"></i>
+                        Your order will be processed securely
+                    </small>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-3">
+            <a href="{% url 'store:cart_detail' %}" class="btn btn-outline-secondary w-100">
+                <i class="fas fa-arrow-left"></i> Back to Cart
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
