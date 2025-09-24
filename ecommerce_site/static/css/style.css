@@ -1,0 +1,109 @@
+/* Custom CSS for E-Commerce Store */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+.card {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border: none;
+    border-radius: 8px;
+}
+
+.btn {
+    border-radius: 6px;
+}
+
+.product-card {
+    transition: transform 0.2s;
+}
+
+.product-card:hover {
+    transform: translateY(-2px);
+}
+
+.quantity-input {
+    max-width: 80px;
+}
+
+.badge {
+    font-size: 0.75em;
+}
+
+footer {
+    margin-top: auto;
+}
+
+/* Alert styling */
+.alert {
+    border-radius: 6px;
+}
+
+/* Form styling */
+.form-control {
+    border-radius: 6px;
+    border: 1px solid #ddd;
+}
+
+.form-control:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+/* Table styling */
+.table th {
+    border-top: none;
+    font-weight: 600;
+}
+
+/* Custom button colors */
+.btn-primary {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.btn-primary:hover {
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .navbar-nav {
+        text-align: center;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+    
+    .table-responsive {
+        font-size: 0.9rem;
+    }
+}
+
+/* Loading animation */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* Product image styling */
+.product-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+/* Cart item image */
+.cart-item-image {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+}
